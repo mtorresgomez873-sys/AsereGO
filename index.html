@@ -133,7 +133,6 @@
 
   <input id="nombre" placeholder="Nombre" class="w-full p-2 border mb-2">
   <input id="precio" placeholder="Precio" class="w-full p-2 border mb-2">
-  <input id="vendedor" placeholder="Tu nombre o teléfono" class="w-full p-2 border mb-2">
   <input id="imagen" type="file" class="w-full mb-2">
 
 <select id="categoria" class="w-full p-2 border mb-2">
@@ -192,7 +191,8 @@ import {
   query,
   orderBy,
   deleteDoc,
-  doc
+  doc,
+  setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -207,6 +207,8 @@ let categoriaActiva = "todos";
 let productosGlobal = [];
 const auth = getAuth();
 const provider = new GoogleAuthProvider();
+let usuarioActual = null;
+
 /* CONVERTIDOR */
 window.convertir = function(){
   let cantidad = parseFloat(document.getElementById("cantidad").value);
@@ -244,7 +246,7 @@ window.publicarProducto = function(){
  await addDoc(collection(db, "productos"), {
   nombre,
   precio,
-  vendedor,
+  vendedor: usuarioActual?.displayName || vendedor,
   categoria,
   userId, // 🔥 NUEVO
   imagen: e.target.result,
@@ -320,17 +322,25 @@ window.loginGoogle = async function(){
   const result = await signInWithPopup(auth, provider);
   const user = result.user;
 
-  console.log("Login:", user.uid);
+  // 🔥 GUARDAR USUARIO
+  await setDoc(doc(db, "usuarios", user.uid), {
+    nombre: user.displayName,
+    email: user.email
+  });
 
   document.getElementById("pantallaInicio").style.display = "none";
   document.getElementById("app").style.display = "block";
 };
 onAuthStateChanged(auth, (user) => {
   if (user) {
+
+    usuarioActual = user; // 🔥 guardar usuario
+
     document.getElementById("pantallaInicio").style.display = "none";
     document.getElementById("app").style.display = "block";
   }
 });
+ 
 </script>
 
 </body>
