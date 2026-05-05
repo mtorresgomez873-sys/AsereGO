@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AsereGo</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+.card:hover{
+  transform: scale(1.05);
+  transition: 0.3s;
+}
+</style>
+</head>
+
+<body class="bg-gray-100 text-gray-900">
+
+   
+
+<!-- 🔥 PANTALLA INICIO -->
+<div id="pantallaInicio" class="h-screen flex flex-col justify-center items-center bg-blue-900 text-white">
+
+  <h1 class="text-4xl font-bold mb-4">ASEREGO 🛵</h1>
+  <p class="mb-6 text-center">Pide lo que quieras, nosotros resolvemos</p>
+
+  <button onclick="loginGoogle()"
+  class="bg-white text-black px-6 py-3 rounded-xl">
+  Iniciar con Google
+  </button>
+   </div>
+
+  <div id="app" style="display:none;">
+
+<!-- NAVBAR -->
+<header class="bg-blue-900 text-white p-4 flex justify-between items-center fixed w-full top-0 z-50 shadow">
+  <div class="flex items-center gap-2">
+    <h1 class="text-lg font-bold">ASEREGO</h1>
+  </div>
+
+  <a href="https://wa.me/5351294230?text=Quiero%20hacer%20un%20pedido"
+     class="bg-red-500 px-4 py-2 rounded-xl text-sm">
+     Pedir
+  </a>
+</header>
+
+<div class="h-16"></div>
+
+<!-- HERO -->
+<section class="bg-white p-8 text-center">
+  <h1 class="text-3xl md:text-4xl font-bold mb-4">
+    Tú pide,<br>
+    <span class="text-red-600">nosotros resolvemos</span>
+  </h1>
+  <p class="mb-6 text-gray-600">Comida, mandados y más en minutos</p>
+
+  <a href="https://wa.me/5351294230?text=Quiero%20hacer%20un%20pedido"
+     class="bg-green-500 text-white px-6 py-3 rounded-xl shadow">
+     Pedir ahora
+  </a>
+</section>
+
+<!-- CATEGORÍAS -->
+<section class="grid grid-cols-2 md:grid-cols-4 gap-6 p-6">
+
+  <a href="https://wa.me/5351294230?text=Quiero%20comida" class="bg-white p-6 rounded-xl shadow text-center card">
+    🍔
+    <h2 class="font-bold mt-2">Comida</h2>
+  </a>
+
+  <a href="https://wa.me/5351294230?text=Quiero%20un%20batido" class="bg-white p-6 rounded-xl shadow text-center card">
+    🥤
+    <h2 class="font-bold mt-2">Batidos</h2>
+  </a>
+
+  <a href="https://wa.me/5351294230?text=Quiero%20hacer%20un%20mandado" class="bg-white p-6 rounded-xl shadow text-center card">
+    🛒
+    <h2 class="font-bold mt-2">Tiendas</h2>
+  </a>
+
+  <div class="bg-white p-6 rounded-xl shadow text-center card">
+    🌽
+    <h2 class="font-bold mt-2">Del campo</h2>
+  </div>
+
+</section>
+
+<!-- DESTACADOS -->
+<section class="p-6">
+  <h2 class="text-xl font-bold mb-4">🔥 Destacados</h2>
+
+  <div class="grid md:grid-cols-3 gap-4">
+
+    <div class="bg-white p-4 rounded-xl shadow card">
+      <h3 class="font-bold">Batido de fresa</h3>
+      <p class="text-gray-600">$120 CUP</p>
+    </div>
+
+    <div class="bg-white p-4 rounded-xl shadow card">
+      <h3 class="font-bold">Pizza especial</h3>
+      <p class="text-gray-600">$250 CUP</p>
+    </div>
+
+    <div class="bg-white p-4 rounded-xl shadow card">
+      <h3 class="font-bold">Combo hamburguesa</h3>
+      <p class="text-gray-600">$300 CUP</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONVERTIDOR -->
+<section class="p-6 bg-white">
+  <h2 class="text-xl font-bold mb-4">💱 Cambio de moneda</h2>
+
+  <input id="cantidad" type="number" placeholder="Cantidad"
+    class="w-full p-3 border rounded mb-2">
+
+  <input id="tasa" type="number" value="320"
+    class="w-full p-3 border rounded mb-2">
+
+  <button onclick="convertir()"
+    class="w-full bg-blue-600 text-white py-2 rounded">
+    Convertir
+  </button>
+
+  <div id="resultado" class="text-center font-bold mt-2"></div>
+</section>
+
+<!-- PUBLICAR -->
+<section class="p-6 bg-white">
+  <h2 class="text-xl font-bold mb-4">📢 Publicar producto</h2>
+
+  <input id="nombre" placeholder="Nombre" class="w-full p-2 border mb-2">
+  <input id="precio" placeholder="Precio" class="w-full p-2 border mb-2">
+  <input id="vendedor" placeholder="Tu nombre o teléfono" class="w-full p-2 border mb-2">
+  <input id="imagen" type="file" class="w-full mb-2">
+
+<select id="categoria" class="w-full p-2 border mb-2">
+  <option value="comida">🍔 Comida</option>
+  <option value="batidos">🥤 Batidos</option>
+  <option value="tienda">🛒 Tienda</option>
+  <option value="campo">🌽 Campo</option>
+</select>
+ 
+  <button onclick="publicarProducto()" class="w-full bg-blue-600 text-white p-2">
+    Publicar
+  </button>
+</section>
+<div class="flex gap-2 p-4 overflow-x-auto">
+
+<button onclick="filtrar('todos')" class="bg-black text-white px-3 py-1 rounded">Todos</button>
+
+<button onclick="filtrar('comida')" class="bg-white px-3 py-1 rounded">🍔</button>
+
+<button onclick="filtrar('batidos')" class="bg-white px-3 py-1 rounded">🥤</button>
+
+<button onclick="filtrar('tienda')" class="bg-white px-3 py-1 rounded">🛒</button>
+
+<button onclick="filtrar('campo')" class="bg-white px-3 py-1 rounded">🌽</button>
+
+</div>
+<!-- MARKETPLACE -->
+<section class="p-6">
+  <h2 class="text-xl font-bold mb-4">🛒 Marketplace</h2>
+  <div id="listaProductos" class="grid md:grid-cols-3 gap-4"></div>
+</section>
+
+<!-- BOTÓN WHATSAPP -->
+<a href="https://wa.me/5351294230?text=Quiero%20hacer%20un%20pedido"
+   class="fixed bottom-5 right-5 bg-green-500 text-white p-4 rounded-full shadow-lg">
+   💬
+</a>
+</div>
+<!-- SCRIPT -->
+<script type="module">
+let userId = localStorage.getItem("userId");
+
+if(!userId){
+  userId = "user_" + Math.random().toString(36).substring(2);
+  localStorage.setItem("userId", userId);
+}
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot,
+  query,
+  orderBy,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyA2Ci6DxWSbUWhhbyZRJWKKpzPniQEvnS8",
+  authDomain: "aserego.firebaseapp.com",
+  projectId: "aserego",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+let categoriaActiva = "todos";
+let productosGlobal = [];
+const auth = getAuth();
+const provider = new GoogleAuthProvider();
+/* CONVERTIDOR */
+window.convertir = function(){
+  let cantidad = parseFloat(document.getElementById("cantidad").value);
+  let tasa = parseFloat(document.getElementById("tasa").value);
+
+  if(isNaN(cantidad) || isNaN(tasa)){
+    document.getElementById("resultado").innerText = "Error";
+    return;
+  }
+
+  document.getElementById("resultado").innerText =
+    (cantidad * tasa) + " CUP";
+};
+window.filtrar = function(cat){
+  categoriaActiva = cat;
+  cargarProductos();
+};
+/* PUBLICAR */
+window.publicarProducto = function(){
+
+  let nombre = document.getElementById("nombre").value;
+  let precio = document.getElementById("precio").value;
+  let vendedor = document.getElementById("vendedor").value;
+  let file = document.getElementById("imagen").files[0];
+  let categoria = document.getElementById("categoria").value;
+  if(!nombre || !precio){       
+    alert("Completa todo");
+    return;
+  }
+
+  let reader = new FileReader();
+
+  reader.onload = async function(e){
+
+ await addDoc(collection(db, "productos"), {
+  nombre,
+  precio,
+  vendedor,
+  categoria,
+  userId, // 🔥 NUEVO
+  imagen: e.target.result,
+  createdAt: new Date()
+});
+
+    document.getElementById("nombre").value = "";
+    document.getElementById("precio").value = "";
+    document.getElementById("vendedor").value = "";
+    document.getElementById("imagen").value = "";
+  };
+
+  if(file){
+    reader.readAsDataURL(file);
+  }
+};
+
+/* MOSTRAR */
+const q = query(collection(db, "productos"), orderBy("createdAt", "desc"));
+
+onSnapshot(q, (snapshot)=>{
+
+  productosGlobal = snapshot.docs; // 🔥 guardamos todo
+  cargarProductos(); // 🔥 mostramos con filtro
+
+});
+function cargarProductos(){
+
+  let cont = document.getElementById("listaProductos");
+  cont.innerHTML = "";
+
+  productosGlobal.forEach(docSnap=>{
+    let p = docSnap.data();
+
+    if(categoriaActiva !== "todos" && p.categoria !== categoriaActiva){
+      return;
+    }
+
+    cont.innerHTML += `
+  <div class="bg-white p-4 rounded-xl shadow card">
+    <img src="${p.imagen}" class="w-full h-40 object-cover mb-2">
+    <h3 class="font-bold">${p.nombre}</h3>
+    <p>${p.precio} CUP</p>
+
+    <p class="text-sm text-gray-500">
+      Por: ${p.vendedor || "Anónimo"}
+    </p>
+
+    <a href="https://wa.me/5351294230?text=Quiero comprar ${p.nombre}"
+    class="block bg-green-500 text-white text-center mt-2 p-2 rounded">
+    Comprar
+    </a>
+
+    ${p.userId === userId ? `
+      <button onclick="eliminar('${docSnap.id}')"
+      class="bg-red-500 text-white px-2 py-1 mt-2 rounded w-full">
+      Eliminar
+      </button>
+    ` : ""}
+
+  </div>
+`;
+  });
+
+}
+
+/* ELIMINAR */
+window.eliminar = async function(id){
+  await deleteDoc(doc(db, "productos", id));
+};
+window.loginGoogle = async function(){
+
+  const result = await signInWithPopup(auth, provider);
+  const user = result.user;
+
+  console.log("Login:", user.uid);
+
+  document.getElementById("pantallaInicio").style.display = "none";
+  document.getElementById("app").style.display = "block";
+};
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.getElementById("pantallaInicio").style.display = "none";
+    document.getElementById("app").style.display = "block";
+  }
+});
+</script>
+
+</body>
+</html> 
